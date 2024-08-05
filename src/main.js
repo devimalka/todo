@@ -11,14 +11,44 @@ function init(){
     container.appendChild(h1);
     document.body.appendChild(container);
 }
-let arrays = [];
+
 function getvalue(){
     let val = document.getElementById("number").value;
-    console.log(val);
     let td = new todoitem(val);
-    arrays.push(td);
-    console.log(arrays)
+    localStorage.setItem(getCounter(),JSON.stringify(td));
+    console.log(localStorage);
+    populateList();
 }
+
+function populateList(){
+    let div = document.querySelector("container-div");
+    
+    for(let i = 1 ; i <= localStorage.length - 1 ; i++){
+        let item = JSON.parse(localStorage.getItem("myObject"+i));
+        console.log(JSON.parse(localStorage.getItem("myObject"+i)));
+        let d = document.createElement('div');
+        let h = document.createElement('h2');
+        h.innerHTML = item.getTitle();
+        d.appendChild(h);
+        div.appendChild(d);
+
+    }
+}
+
+function getCounter() {
+    let counter = localStorage.getItem("counter");
+    if(counter == null){
+       localStorage.setItem("counter",1);
+       counter = 1;
+    }
+    else{
+        counter = parseInt(counter);
+        counter+= 1;
+        localStorage.setItem("counter",counter);
+    }
+    return "myObject" + counter;
+}
+
 function todoCreate(){
     let div = document.createElement('div');
     div.classList.add('todoCreate');
@@ -38,3 +68,4 @@ function todoCreate(){
 init();
 let dd = todoCreate();
 document.body.appendChild(dd);
+localStorage.clear();

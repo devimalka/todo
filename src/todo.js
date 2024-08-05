@@ -8,6 +8,9 @@ export default class todoitem{
         this.date = date;
     }
 
+    getTitle(){
+        return this.getTitle;
+    }
     setNote(note){
         this.note = note;
     }
